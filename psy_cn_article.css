@@ -1,0 +1,267 @@
+/* 魔改版: H1-H3带计数标题 */
+/* H5 主标题 H6 摘要*/
+/* QUOTE 参考文献 */
+/* R1.00 */
+
+
+
+/* 宋体不支持导出PDF时的加粗，用四周阴影来魔改 */
+strong{
+    text-shadow:0.15pt 0px 0px black,0.25pt 0px 0px black,0.35pt 0px 0px black,-0.25pt 0px 0px black,0px 0.25pt 0px black,0px -0.25pt 0px black;
+}
+
+body{
+    /* border:1px solid black; for debug */
+    padding:0 !important;
+    margin:0 !important;
+}
+/* 正文区基本属性 */
+#write {
+   font-family: 'Times New Roman',"SimSun";
+   font-size: 12pt;
+   max-width: 21cm; /*A4标准宽度*/
+   border:1pt solid #CCC ; /* 添加一个淡灰色的边框 */
+   text-align: justify;
+}
+
+
+/* 行间距 */
+#write p{
+    margin-block-start: 0.1em;
+    margin-block-end: 0.1em;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+
+/* 打印: 移除超链接格式，页边距 */
+@media print {
+    #write a {
+        color: inherit;
+        text-decoration: none; }
+    
+    @page {
+        margin: 0.57in 0.94in 0.09in 1.07in !important; 
+      }
+  }
+
+/* 编辑区移除超链接格式 */
+#write a {
+color: inherit;
+text-decoration: none; }
+
+
+@page{
+	margin: 0.57in 0.94in 0.09in 1.07in !important;
+    /* padding: 0.97in 1.04in 0.19in 1.17in; */
+}
+
+
+/*引言 QUOTE 参考文献*/
+blockquote:before{
+    content:"参 考 文 献";
+    text-align: center;
+    padding-top: 0.08in;
+    padding-bottom: 0.2in;
+	/* font-family:'Times New Roman',"SimSun"; */
+	/* border-left:3px solid black; */
+    font-size: 14pt;
+    display:inline-block;
+    font-weight: bold;
+    text-shadow:0.15pt 0px 0px black,0.25pt 0px 0px black,0.35pt 0px 0px black,-0.25pt 0px 0px black,0px 0.25pt 0px black,0px -0.25pt 0px black;
+    width: 100%;
+	/*color:grey;*/
+}
+
+/* APA悬挂 */
+blockquote p{
+    font-family: 'Times New Roman',"SimSun";
+    text-indent:-0.5in !important; 
+    padding-left: 0.5in;
+    margin-block-start: 0em !important;
+    margin-block-end: 0em !important;
+    line-height: 100% !important;
+}
+
+
+/* justify对齐 */
+p{
+	text-align:justify;
+}
+/* 缩进 */
+/* p[mdtype=paragraph] {text-indent:2em;} */
+p{text-indent:2em;}
+
+
+h1,h2,h3,h4,h5,h6 {
+	/* font-weight:bold; */
+    /* font-family: 'Times New Roman',"SimSun"; */
+    text-align: left;
+	@media print{
+    page-break-after:avoid !important;
+	}
+}
+
+
+
+/* 标题属性 */
+h1 {
+    font-weight: lighter;
+    font-size:15pt;
+    /*page-break-before:always!important;*/
+}
+h2 {
+    font-weight: lighter;
+	font-size:14pt;
+}
+h3 {
+    font-weight: lighter;
+	font-size:13pt;
+}
+/* 魔改主标题 */
+h5 {
+	font-size:22pt;
+    text-align: center;
+    text-shadow:0.15pt 0px 0px black,0.25pt 0px 0px black,0.35pt 0px 0px black,-0.25pt 0px 0px black,0px 0.25pt 0px black,0px -0.25pt 0px black;
+    
+}
+/* 摘要 */
+h6 {
+	font-family:'Times New Roman',楷体;
+    font-weight: lighter;
+    font-size: 14pt;
+}
+
+/* 三线表 TODO*/
+#write table{
+	border-top: 1.5pt solid;
+	border-bottom: 1.5pt solid;
+	font-family:'Times New Roman',"SimSun";
+	/*font-size:7.875pt;*/
+	font-size:10.5pt;
+	text-align:center;
+    page-break-inside:avoid!important;
+}
+#write table td{
+	padding:2px;
+}
+#write table tr{
+	/* padding:3px; */
+}
+#write thead{
+	border-bottom: 0.75pt solid;
+	font-family:'Times New Roman',黑体;
+	font-size:10.5pt;
+}
+/* @media print{
+	img{
+        page-break-inside:avoid !important;
+        break-inside: avoid !important;
+	}
+} */
+img{
+    page-break-inside:avoid !important;
+    break-inside: avoid !important;
+}
+
+
+span.md-fn-count::before{
+    content:'[';
+}
+span.md-fn-count::after{
+    content:']';
+}
+/* 以下开始为自动编号 */
+#write {
+    counter-reset: tableHead imgHead write-h1 write-h2 write-h3 write-h4!important;/*修复缺失上级标题时无法递增*/
+}
+/* 编辑器内标题-重置 */
+#write h1 {
+    counter-reset: write-h2;
+}
+#write h2 {
+    counter-reset: write-h3;
+}
+#write h3 {
+    counter-reset: write-h4;
+}
+
+/* 编辑器内标题-显示 */
+#write h1:before {
+    counter-increment: write-h1;
+    content: counter(write-h1, decimal) ".";
+}
+#write h2:before {
+    counter-increment: write-h2;
+    content:  counter(write-h1, decimal) "." counter(write-h2, decimal) ".";
+}
+#write h3:before {
+    counter-increment: write-h3;
+    content: counter(write-h1, decimal) "." counter(write-h2, decimal) "." counter(write-h3, decimal) ".";
+}
+#write h4:before {
+    counter-increment: write-h4;
+    content: counter(write-h1, decimal) "." counter(write-h2, decimal) "." counter(write-h3, decimal) "." counter(write-h4, decimal) ". ";
+}
+#write h6:before{
+    font-family: "SimSun";
+    font-size: 13pt;
+    /* font-weight: bold; */
+    content: "摘 要 ";
+    text-align: 0 !important;
+    padding-left: 2em ;    
+    text-shadow:0.15pt 0px 0px black,0.25pt 0px 0px black,0.35pt 0px 0px black,-0.25pt 0px 0px black,0px 0.25pt 0px black,0px -0.25pt 0px black;
+}
+
+/* 表格自动编号 */
+#write figure:after{
+	counter-increment: tableHead;
+	content: "表" counter(tableHead) " ";
+	text-align:center;
+	width:100%;
+	display:inline-block;
+}
+/* 图片自动编号，导出PDF时暂时无法显示 */
+#write .md-image:after{
+	counter-increment: imgHead;
+	content: "图" counter(imgHead) attr(alt) " " !important;
+	text-align:center;
+	width:100%;
+	display:inline-block;
+}
+
+
+
+/* 大纲标题 -重置*/
+.sidebar-content{
+    counter-reset: outline-h1 outline-h2 outline-h3 outline-h4;/*修复缺失上级标题时无法递增*/
+}
+.sidebar-content .outline-h1 {
+    counter-reset: outline-h2;
+}
+.sidebar-content .outline-h2 {
+    counter-reset: outline-h3;
+}
+.sidebar-content .outline-h3 {
+    counter-reset: outline-h4;
+}
+/* 大纲标题 -显示*/
+.sidebar-content .outline-h1 .outline-label:before {
+    counter-increment: outline-h1;
+    content: counter(outline-h1, decimal) ".";
+}
+.sidebar-content .outline-h2 .outline-label:before {
+    counter-increment: outline-h2;
+    content: counter(outline-h1, decimal) "." counter(outline-h2, decimal) ".";
+}
+.sidebar-content .outline-h3 .outline-label:before {
+    counter-increment: outline-h3;
+    content: counter(outline-h1, decimal) "." counter(outline-h2, decimal) "." counter(outline-h3, decimal) ".";
+}
+.sidebar-content .outline-h4 .outline-label:before {
+    counter-increment: outline-h4;
+    content: counter(outline-h1, decimal) "." counter(outline-h2, decimal) "." counter(outline-h3, decimal) "." counter(outline-h4, decimal) ". ";
+} 
