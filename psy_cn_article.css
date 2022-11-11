@@ -1,8 +1,8 @@
 /* 魔改版: H1-H3带计数标题 */
 /* H5 主标题 H6 摘要*/
 /* QUOTE 参考文献 */
-/* 撤销了图片和表格的自动标号 */
-/* R1.01 */
+/* R1.00 */
+
 
 
 /* 宋体不支持导出PDF时的加粗，用四周阴影来魔改 */
@@ -32,7 +32,7 @@ body{
 }
 
 h1,h2,h3,h4,h5,h6 {
-    font-family: 'Times New Roman',"SimHei";  /*顺序*/
+    font-family: 'Times New Roman',"SimHei";
 	margin-block-start: 0.5em;
     margin-block-end: 0.5em;
 }
@@ -45,7 +45,7 @@ h1,h2,h3,h4,h5,h6 {
         text-decoration: none; }
     
     @page {
-        margin: 0.57in 0.94in 0.09in 1.07in !important; 
+        margin: 0.57in 0.94in 0.59in 1.07in !important; 
       }
   }
 
@@ -56,7 +56,7 @@ text-decoration: none; }
 
 
 @page{
-	margin: 0.57in 0.94in 0.09in 1.07in !important;
+	margin: 0.57in 0.94in 0.59in 1.07in !important;
     /* padding: 0.97in 1.04in 0.19in 1.17in; */
 }
 
@@ -217,7 +217,7 @@ span.md-fn-count::after{
     text-shadow:0.15pt 0px 0px black,0.25pt 0px 0px black,0.35pt 0px 0px black,-0.25pt 0px 0px black,0px 0.25pt 0px black,0px -0.25pt 0px black;
 }
 
-/* 表格自动编号
+/* 表格自动编号 */
 #write figure:after{
 	counter-increment: tableHead;
 	content: "表" counter(tableHead) " ";
@@ -225,14 +225,14 @@ span.md-fn-count::after{
 	width:100%;
 	display:inline-block;
 }
-图片自动编号，导出PDF时暂时无法显示
+/* 图片自动编号，导出PDF时暂时无法显示 */
 #write .md-image:after{
 	counter-increment: imgHead;
 	content: "图" counter(imgHead) attr(alt) " " !important;
 	text-align:center;
 	width:100%;
 	display:inline-block;
-} */
+}
 
 
 
